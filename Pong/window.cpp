@@ -25,26 +25,18 @@ bool Window::init() {
 	return true;
 }
 
-void Window::draw() {
+void Window::clear() {
+	SDL_RenderPresent(_renderer);
 	SDL_SetRenderDrawColor(_renderer, 0, 0, 0, 255);
 	SDL_RenderClear(_renderer);
-
-	SDL_Rect rect = { (_width / 2) - (10/2), (_height / 2) - (10/2), 10, 10 };
-
-	SDL_SetRenderDrawColor(_renderer, 255, 255, 255, 255);
-	SDL_RenderFillRect(_renderer, &rect);
-
-	SDL_RenderPresent(_renderer);
 }
 
-void Window::poll_events() {
-	SDL_Event event;
-
-	if (SDL_PollEvent(&event)) {
-		switch (event.type) {
-		case SDL_QUIT:
-			_closed = true;
-			break;
-		}
+void Window::poll_events(SDL_Event event) {
+	switch (event.type) {
+	case SDL_QUIT:
+		_closed = true;
+		break;
+	default:
+		break;
 	}
 }
