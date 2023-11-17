@@ -39,7 +39,7 @@ int main(int argc, char** agrv) {
 
 		l_paddle.draw();
 		r_paddle.draw();
-		l_paddle.update(delta_time);
+		l_paddle.update(1.0/60.0);
 		poll_events(window, l_paddle);
 		window.clear();
 
