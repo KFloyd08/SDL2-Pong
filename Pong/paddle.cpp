@@ -7,8 +7,8 @@ Window(window), _x(x), _y(y), _w(w), _h(h), _r(r), _g(g), _b(b), _a(a)
 	m_y = static_cast<double>(y);
 }
 
-void Paddle::draw() const {
-	SDL_Rect rect = {_x, _y, _w, _h };
+void Paddle::draw() {
+	rect = {_x, _y, _w, _h };
 
 	SDL_SetRenderDrawColor(_renderer, _r, _g, _b, _a);
 	SDL_RenderFillRect(_renderer, &rect);

@@ -9,13 +9,17 @@ public:
 	enum class Direction {NONE, UP, DOWN};
 	Paddle(const Window& window, int x, int y, int w, int h, int r, int g, int b, int a);
 	~Paddle() = default;
-	void draw() const;
+	void draw();
 	void poll_events(SDL_Event event);
 	void update(double delta_time);
 
-private:
 	int _x, _y;
 	int _w, _h;
+
+	SDL_Rect rect;
+
+private:
+	
 	int _r, _g, _b, _a;
 	Direction _direction;
 	double m_y;
