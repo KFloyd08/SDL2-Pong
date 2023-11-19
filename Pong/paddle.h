@@ -15,6 +15,7 @@ public:
 
 	int _x, _y;
 	int _w, _h;
+	double m_y;
 
 	SDL_Rect rect;
 
@@ -22,6 +23,6 @@ private:
 	
 	int _r, _g, _b, _a;
 	Direction _direction;
-	double m_y;
+	
 	const float speed = 1;
 };

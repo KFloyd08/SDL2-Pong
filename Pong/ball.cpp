@@ -11,6 +11,7 @@ Window(window), _x(x), _y(y), _w(w), _h(h), _r(r), _g(g), _b(b), _a(a)
 void Ball::update(double delta_time) {
 	m_x += speed_x * delta_time;
 	m_y += speed_y * delta_time;
+
 	_x = m_x;
 	_y = m_y;
 

@@ -10,8 +10,8 @@ public:
 	void draw();
 	void update(double delta_time);
 
-	double speed_x = 5;
-	double speed_y = 5;
+	double speed_x = 10;
+	double speed_y = 10;
 
 	int _x, _y;
 	int _w, _h;

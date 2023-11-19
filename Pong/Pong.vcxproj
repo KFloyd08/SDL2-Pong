@@ -134,11 +134,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ball.cpp" />
+    <ClCompile Include="cpu_paddle.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="paddle.cpp" />
     <ClCompile Include="window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="cpu_paddle.hpp" />
     <ClInclude Include="ball.h" />
     <ClInclude Include="paddle.h" />
     <ClInclude Include="window.h" />

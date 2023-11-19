@@ -2,6 +2,7 @@
 #include "window.h"
 #include "paddle.h"
 #include "ball.h"
+#include "cpu_paddle.hpp"
 
 SDL_Window* window = nullptr;
 SDL_Renderer* renderer = nullptr;
@@ -37,23 +38,25 @@ void poll_events(Window &window, Paddle &paddle) {
 	}
 }
 
-void updates(Paddle &paddle, Ball &ball, Paddle &paddle_two) {
+void updates(Paddle &paddle, Ball &ball, CPU_Paddle &paddle_two) {
 	double delta_time = (1.0 / 60.0);
 
-	paddle.update(delta_time);
-	ball.update(delta_time);
-
 	if (check_collision(paddle.rect, ball.rect)) {
-		ball.speed_x *= -1;
+		ball.speed_x *= -1.05;
 	}
 
 	if (check_collision(paddle_two.rect, ball.rect)) {
-		ball.speed_x *= -1;
+		ball.speed_x *= -1.05;
 	}
+
+	paddle.update(delta_time);
+	ball.update(delta_time);
+	paddle_two.cpu_update(delta_time, ball._y);
 }
 
 int main(int argc, char** agrv) {
 
+	// Window Variables
 	const int window_width = 640;
 	const int window_height = 320;
 
@@ -61,26 +64,23 @@ int main(int argc, char** agrv) {
 		SDL_Log("Error initializing SDL.\n");
 	}
 
-	Window window("Pong", window_width, window_height);
-	Paddle l_paddle(window, 25, (window_height / 2) - (75/2), 15, 75, 255, 255, 255, 255);
-	Paddle r_paddle(window, (window_width - (25 + 15)), (window_height / 2) - (75 / 2), 15, 75, 255, 255, 255, 255);
-	Ball ball(window, (window_width / 2) - (10/2), (window_height / 2) - (10/2), 10, 10, 255, 255, 255, 255);
+	// Entities
+	Window window("Pong", window_width, window_height); // Creates Window
+	Paddle l_paddle(window, 5, (window_height / 2) - (75/2), 15, 75, 255, 255, 255, 255); // Creates Left Paddle
+	CPU_Paddle r_paddle(window, (window_width - (5 + 15)), (window_height / 2) - (75 / 2), 15, 75, 255, 255, 255, 255); // Creates Right Paddle
+	Ball ball(window, (window_width / 2) - (10/2), (window_height / 2) - (10/2), 10, 10, 255, 255, 255, 255); // Creates Ball
 
-	LastTick = SDL_GetTicks();
-
-	while (!window.isClosed()) {
-
-		int nowTicks = SDL_GetTicks();
-		float delta_time = float((nowTicks - LastTick));
-
-		updates(l_paddle, ball, r_paddle);
+	while (!window.isClosed()){
+		// Events
 		poll_events(window, l_paddle);
+		// Updates
+		updates(l_paddle, ball, r_paddle);
+		// Draw
 		l_paddle.draw();
 		r_paddle.draw();
 		ball.draw();
+		// Clear Window
 		window.clear();
-
-		LastTick = nowTicks;
 	}
 
 	return 0;
