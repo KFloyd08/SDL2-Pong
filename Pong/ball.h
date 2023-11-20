@@ -8,7 +8,7 @@ public:
 	Ball(const Window& window, int x, int y, int w, int h, int r, int g, int b, int a);
 	
 	void draw();
-	void update(double delta_time);
+	void update(double delta_time, int &score);
 
 	double speed_x = 10;
 	double speed_y = 10;

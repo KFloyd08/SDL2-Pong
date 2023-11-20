@@ -1,4 +1,5 @@
 #include <SDL.h>
+#include <iostream>
 #include "window.h"
 #include "paddle.h"
 #include "ball.h"
@@ -38,19 +39,19 @@ void poll_events(Window &window, Paddle &paddle) {
 	}
 }
 
-void updates(Paddle &paddle, Ball &ball, CPU_Paddle &paddle_two) {
+void updates(Paddle &paddle, Ball &ball, CPU_Paddle &paddle_two, int &score) {
 	double delta_time = (1.0 / 60.0);
 
 	if (check_collision(paddle.rect, ball.rect)) {
-		ball.speed_x *= -1.05;
+		ball.speed_x *= -1.0;
 	}
 
 	if (check_collision(paddle_two.rect, ball.rect)) {
-		ball.speed_x *= -1.05;
+		ball.speed_x *= -1.0;
 	}
 
 	paddle.update(delta_time);
-	ball.update(delta_time);
+	ball.update(delta_time, score);
 	paddle_two.cpu_update(delta_time, ball._y);
 }
 
@@ -59,6 +60,8 @@ int main(int argc, char** agrv) {
 	// Window Variables
 	const int window_width = 640;
 	const int window_height = 320;
+
+	int score = 0;
 
 	if (SDL_Init(SDL_INIT_VIDEO) < 0) {
 		SDL_Log("Error initializing SDL.\n");
@@ -74,7 +77,7 @@ int main(int argc, char** agrv) {
 		// Events
 		poll_events(window, l_paddle);
 		// Updates
-		updates(l_paddle, ball, r_paddle);
+		updates(l_paddle, ball, r_paddle, score);
 		// Draw
 		l_paddle.draw();
 		r_paddle.draw();
